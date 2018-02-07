@@ -1,0 +1,47 @@
+
+
+table {
+    border : 1px solid black;
+}
+
+table td{
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    width: 35px;
+    height: 35px;
+}
+
+table.interactive td.empty{
+    cursor: pointer;
+}
+
+table.interactive td:hover{
+    border: 2px solid red;
+}
+
+#board{
+    width: 100%;
+    border: none;
+}
+
+.unknown {
+    background-color: white;
+}
+
+
+.empty {
+    background-color: lightblue;
+}
+
+.wall {
+    background-color: black;
+}
+
+.obstacle {
+    background-color: dimgrey;
+}
+
+.robot {
+    background-color: greenyellow;
+}
