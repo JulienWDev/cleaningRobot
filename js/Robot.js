@@ -15,7 +15,14 @@ var Robot = (function () {
     }
 
     function move(direction){
+        var validDirections = ['up', 'right', 'bottom', 'left'];
         console.log('in move, direction=', direction);
+        if(-1 !== validDirections.indexOf(direction)){
+            console.log('moving');
+        } else {
+            console.error('Error in move: invalid direction given', direction);
+        }
+
     }
 
     function showOnMap($startCell){

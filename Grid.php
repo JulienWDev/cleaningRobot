@@ -62,7 +62,7 @@ class Grid{
                     $tableClass = 'interactive';
                 }
 
-                $html .= '<table id="'.$mode.'" class="'.$tableClass.' '.$mode.'"><tbody>';
+                $html .= '<table id="'.$mode.'" class="'.$tableClass.' '.$mode.' grid"><tbody>';
 
                 $max_x = 0;
                 $max_y = 0;

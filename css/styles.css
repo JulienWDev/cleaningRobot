@@ -1,10 +1,17 @@
+#board{
+    width: 100%;
+    border: none;
+}
 
+#board td.sub_table{
+    width: 33%;
+}
 
 table {
     border : 1px solid black;
 }
 
-table td{
+table.grid td{
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -20,9 +27,14 @@ table.interactive td:hover{
     border: 2px solid red;
 }
 
-#board{
-    width: 100%;
-    border: none;
+
+
+#robot_commands{
+    width: 20%;
+}
+
+#robot_commands td{
+    text-align: center;
 }
 
 .unknown {

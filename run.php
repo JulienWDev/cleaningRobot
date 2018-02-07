@@ -45,7 +45,20 @@ if (true === isset($_GET['filename']) && '' != $_GET['filename']){
     $errors[] = 'Veuillez indiquer un fichier de grille.';
 }
 
-
+$htmlRobotCommands = '
+<table id="robot_commands">
+    <tbody>
+        <tr>
+            <td></td><td><button id="btn_up">UP</button></td><td></td>
+        </tr>
+        <tr>
+            <td><button id="btn_up">LEFT</button></td><td></td><td><button id="btn_up">RIGHT</button></td>
+            </tr>
+        <tr>
+            <td></td><td><button id="btn_bottom">BOTTOM</button></td><td></td>
+        </tr>
+    </tbody>    
+</table>';
 
 ?>
 
@@ -70,7 +83,7 @@ else:
 
 <table id="board" data-grid_json="<?php echo $gridJson; ?>" data-css_mapping_json="<?php echo $cssMappingJson; ?>">
     <tr>
-        <td>
+        <td class="sub_table">
             <?php
             if ('' !== $htmlCoderViewGrid) {
                 echo $htmlCoderViewGrid;
@@ -79,12 +92,21 @@ else:
             }
             ?>
         </td>
-        <td>
+        <td class="sub_table">
             <?php
             if ('' !== $htmlRobotViewGrid) {
                 echo $htmlRobotViewGrid;
             } else {
                 echo 'Impossible de charger la grille HTML.';
+            }
+            ?>
+        </td>
+        <td class="sub_table">
+            <?php
+            if ('' !== $htmlRobotCommands) {
+                echo $htmlRobotCommands;
+            } else {
+                echo 'Impossible de charger les commandes du robot.';
             }
             ?>
         </td>
