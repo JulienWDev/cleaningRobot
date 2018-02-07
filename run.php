@@ -38,7 +38,7 @@ if (true === isset($_GET['filename']) && '' != $_GET['filename']){
     <link rel="stylesheet" type="text/css" href="css/styles.css" media="screen">
 </head>
 <body>
-<table id="board" data-grid_array="<?php echo $gridJson; ?>">
+<table id="board" data-grid_json="<?php echo $gridJson; ?>">
     <tr>
         <td>
             <?php
@@ -66,7 +66,8 @@ if (true === isset($_GET['filename']) && '' != $_GET['filename']){
     src="http://code.jquery.com/jquery-3.3.1.min.js"
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
-<script type="text/javascript" src="js/Sensor.js"></script>
+<script type="text/javascript" src="js/MoveEngine.js"></script>
+<script type="text/javascript" src="js/Sensors.js"></script>
 <script type="text/javascript" src="js/Robot.js"></script>
 <script type="text/javascript" src="js/Run.js"></script>
 

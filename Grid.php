@@ -62,22 +62,30 @@ class Grid{
 
                 $html .= '<table id="'.$mode.'" class="'.$tableClass.' '.$mode.'"><tbody>';
 
-                foreach($this->grid as $gridLine){
+                $max_x = 0;
+                $max_y = 0;
+                foreach($this->grid as $y => $gridLine){
                     if (true === is_array($gridLine)){
                         $html .= '<tr>';
-                        foreach($gridLine as $gridCell){
+                        foreach($gridLine as $x => $gridCell){
                             if (true === isset($this->cssMapping[$gridCell])){
                                 $cssClass = $this->cssMapping[$gridCell];
                                 if ('robotView' === $mode){
                                     $cssClass = 'unknown';
                                 }
-                                $html .= '<td class="'.$cssClass.'"></td>';
+                                $html .= '<td class="'.$cssClass.'" data-x="'.$x.'" data-y="'.$y.'"></td>';
+                            }
+                            if ($x > $max_x){
+                                $max_x = $x;
                             }
                         }
                         $html .= '</tr>';
                     }
+                    if ($y > $max_y){
+                        $max_y = $y;
+                    }
                 }
-                $html .= '</tbody></table>';
+                $html .= '</tbody></table><span id="'.$mode.'_boundaries" data-max_x="'.$max_x.'" data-max_y="'.$max_y.'"></span>';
             }
 
             return $html;

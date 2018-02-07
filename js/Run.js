@@ -1,4 +1,5 @@
 var interactiveClass = 'interactive';
+var boardId = 'board';
 
 var Run =(function () {
     var self = {};
@@ -9,10 +10,9 @@ var Run =(function () {
         $grid.find('td.empty').on('click', function(){
             if (true === $grid.hasClass(interactiveClass)){
                 var $startCell = $(this);
-                console.log('click!');
                 $message.text('Démarrage du Test...');
                 $grid.removeClass('interactive');
-                Robot.init($startCell);
+                Robot.init(boardId, $startCell);
             }
         });
     };
