@@ -29,11 +29,11 @@ table.interactive td:hover{
 
 
 
-#robot_commands{
+#robot_command_panel{
     width: 20%;
 }
 
-#robot_commands td{
+#robot_command_panel td{
     text-align: center;
 }
 
@@ -61,4 +61,8 @@ table.interactive td:hover{
 .error{
     color: red;
     font-weight: bold;
+}
+
+#message{
+    margin-top: 1em;
 }

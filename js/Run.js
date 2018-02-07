@@ -2,8 +2,9 @@ var interactiveClass = 'interactive';
 var boardId = 'board';
 
 var Run =(function () {
-    var self = {};
-    var $message = $('#message');
+    var self = {},
+        $message = $('#message'),
+        robot;
 
     var doBindings = function(grid_id){
         var $grid = $(grid_id);
@@ -12,7 +13,8 @@ var Run =(function () {
                 var $startCell = $(this);
                 $message.text('Démarrage du Test...');
                 $grid.removeClass('interactive');
-                Robot.init(boardId, $startCell);
+                robot = new Robot(boardId, $startCell);
+                var rcp = new RobotCommandPanel('robot_command_panel', robot);
             }
         });
     };

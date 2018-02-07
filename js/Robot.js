@@ -1,20 +1,20 @@
-var Robot = (function () {
+var Robot = function (boardId, $startCell) {
     var self = {};
     var sensors;
     var moveEngine;
     var $currentCell;
 
-    function exploreGrid(){
+    self.exploreGrid = function(){
         var neighboringCells,
             direction;
         // while (false === MoveEngine.isMapComplete()){
             neighboringCells = sensors.getNeighboringCells($currentCell);
             direction = moveEngine.getNextMove(neighboringCells);
-            move(direction);
+            self.move(direction);
         // }
-    }
+    };
 
-    function move(direction){
+    self.move = function (direction){
         var validDirections = ['up', 'right', 'bottom', 'left'];
         console.log('in move, direction=', direction);
         if(-1 !== validDirections.indexOf(direction)){
@@ -23,7 +23,7 @@ var Robot = (function () {
             console.error('Error in move: invalid direction given', direction);
         }
 
-    }
+    };
 
     function showOnMap($startCell){
         $startCell.addClass('robot');
@@ -49,15 +49,15 @@ var Robot = (function () {
       return sensors;
     };
 
-    self.init = function (boardId, $startCell){
+    init = function (boardId, $startCell){
         console.log('Démarrage du robot, $startCell=', $startCell);
         initSensor(boardId);
         initMoveEngine();
         showOnMap($startCell);
         $currentCell = $startCell;
-
-        exploreGrid();
     };
 
+    init(boardId, $startCell);
+
     return self;
-})();
+};

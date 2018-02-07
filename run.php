@@ -45,17 +45,17 @@ if (true === isset($_GET['filename']) && '' != $_GET['filename']){
     $errors[] = 'Veuillez indiquer un fichier de grille.';
 }
 
-$htmlRobotCommands = '
-<table id="robot_commands">
+$htmlRobotCommandPanel = '
+<table id="robot_command_panel">
     <tbody>
         <tr>
-            <td></td><td><button id="btn_up">UP</button></td><td></td>
+            <td></td><td><button id="btn_up" data-direction="up">UP</button></td><td></td>
         </tr>
         <tr>
-            <td><button id="btn_up">LEFT</button></td><td></td><td><button id="btn_up">RIGHT</button></td>
+            <td><button id="btn_left" data-direction="left">LEFT</button></td><td><button id="btn_explore" data-direction="explore">EXPLORE</button></td><td><button id="btn_right" data-direction="right">RIGHT</button></td>
             </tr>
         <tr>
-            <td></td><td><button id="btn_bottom">BOTTOM</button></td><td></td>
+            <td></td><td><button id="btn_bottom" data-direction="bottom">BOTTOM</button></td><td></td>
         </tr>
     </tbody>    
 </table>';
@@ -103,8 +103,8 @@ else:
         </td>
         <td class="sub_table">
             <?php
-            if ('' !== $htmlRobotCommands) {
-                echo $htmlRobotCommands;
+            if ('' !== $htmlRobotCommandPanel) {
+                echo $htmlRobotCommandPanel;
             } else {
                 echo 'Impossible de charger les commandes du robot.';
             }
@@ -112,7 +112,7 @@ else:
         </td>
     </tr>
 </table>
-<span id="message"></span>
+<div id="message"></div>
 <?php
 endif;
 ?>
@@ -121,11 +121,13 @@ endif;
     src="http://code.jquery.com/jquery-3.3.1.min.js"
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
+
 <script type="text/javascript" src="js/RobotView.js"></script>
 <script type="text/javascript" src="js/MoveEngine.js"></script>
 <script type="text/javascript" src="js/Sensors.js"></script>
 <script type="text/javascript" src="js/Robot.js"></script>
 <script type="text/javascript" src="js/Run.js"></script>
+<script type="text/javascript" src="js/RobotCommandPanel.js"></script>
 
 </body>
 </html>
