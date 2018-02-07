@@ -4,6 +4,8 @@ require 'Grid.php';
 
 use CleaningRobot\Grid;
 
+$errors = array();
+
 $gridsFolder = 'grids';
 
 $htmlGrid = '';
@@ -24,6 +26,8 @@ if (true === isset($_GET['filename']) && '' != $_GET['filename']){
             }
         }
     }
+} else {
+    $errors[] = 'Veuillez indiquer un fichier de grille.';
 }
 
 
@@ -38,6 +42,17 @@ if (true === isset($_GET['filename']) && '' != $_GET['filename']){
     <link rel="stylesheet" type="text/css" href="css/styles.css" media="screen">
 </head>
 <body>
+
+<?php
+if (0 !== count($errors)):{
+    foreach($errors as $error){
+        echo '<p class="error">'.$error.'</p>';
+    }
+}
+
+else:
+?>
+
 <table id="board" data-grid_json="<?php echo $gridJson; ?>">
     <tr>
         <td>
@@ -60,8 +75,11 @@ if (true === isset($_GET['filename']) && '' != $_GET['filename']){
         </td>
     </tr>
 </table>
-
 <span id="message"></span>
+<?php
+endif;
+?>
+
 <script
     src="http://code.jquery.com/jquery-3.3.1.min.js"
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="

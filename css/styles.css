@@ -45,3 +45,8 @@ table.interactive td:hover{
 .robot {
     background-color: greenyellow;
 }
+
+.error{
+    color: red;
+    font-weight: bold;
+}
