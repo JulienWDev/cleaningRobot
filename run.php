@@ -48,6 +48,7 @@ if (true === isset($_GET['filename']) && '' != $_GET['filename']){
 $htmlRobotCommandPanel = '
 <table id="robot_command_panel">
     <tbody>
+    <tr><th colspan="3">Command Panel</th></tr>
         <tr>
             <td></td><td><button id="btn_up" data-direction="up">UP</button></td><td></td>
         </tr>
