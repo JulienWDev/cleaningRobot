@@ -46,17 +46,17 @@ if (true === isset($_GET['filename']) && '' != $_GET['filename']){
 }
 
 $htmlRobotCommandPanel = '
-<table id="robot_command_panel">
+<table id="robot_command_panel" title="Veuillez placer le robot sur la grille">
     <tbody>
     <tr><th colspan="3">Command Panel</th></tr>
         <tr>
-            <td></td><td><button id="btn_up" data-direction="up">UP</button></td><td></td>
+            <td></td><td><button id="btn_up" data-direction="up" disabled>UP</button></td><td></td>
         </tr>
         <tr>
-            <td><button id="btn_left" data-direction="left">LEFT</button></td><td><button id="btn_explore" data-direction="explore">EXPLORE</button></td><td><button id="btn_right" data-direction="right">RIGHT</button></td>
+            <td><button id="btn_left" data-direction="left" disabled>LEFT</button></td><td><button id="btn_explore" data-direction="explore" disabled>EXPLORE</button></td><td><button id="btn_right" data-direction="right" disabled>RIGHT</button></td>
             </tr>
         <tr>
-            <td></td><td><button id="btn_bottom" data-direction="bottom">BOTTOM</button></td><td></td>
+            <td></td><td><button id="btn_bottom" data-direction="bottom" disabled>BOTTOM</button></td><td></td>
         </tr>
     </tbody>    
 </table>';

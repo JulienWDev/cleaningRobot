@@ -12,17 +12,22 @@ var RobotCommandPanel = function (rcpId, robotToControl) {
         var $rcp = $('#' + rcpId),
             validDirections = ['up', 'right', 'bottom', 'left', 'explore'],
             direction,
-            i;
+            i,
+            $btn;
 
         if ('undefined' !== typeof $rcp && 1 === $rcp.length){
             for (i in validDirections){
                 if (validDirections.hasOwnProperty(i)){
                     direction = validDirections[i];
-                    $rcp.find('#btn_' + direction).on('click', function () {
+                    $btn = $rcp.find('#btn_' + direction);
+                    $btn.on('click', function () {
                         onCommandClick($(this));
                     });
+                    $btn.removeAttr('disabled')
                 }
             }
+
+            $rcp.removeAttr('title');
         } else {
             console.error('Error in doBindings(): No command panel found');
             return false;
