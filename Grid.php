@@ -15,7 +15,6 @@ class Grid{
 
         private function loadGrid($filePath)
         {
-//            echo "Raw Grid:<br /><br />";
             $handle = @fopen($filePath, "r");
             if ($handle) {
                 while (($buffer = fgets($handle, 4096)) !== false) {
@@ -28,7 +27,6 @@ class Grid{
                             $gridLine[] = (int)$char;
                         }
                     }
-//                    echo "$buffer<br />";
 
                     $this->grid[] = $gridLine;
                 }
@@ -36,13 +34,17 @@ class Grid{
                     echo "Erreur: fgets() a échoué\n";
                 }
                 fclose($handle);
-//                echo "<br />";
             }
         }
 
         public function getGrid()
         {
             return $this->grid;
+        }
+
+        public function getCssMapping()
+        {
+            return $this->cssMapping;
         }
 
         public function getHtmlGrid($mode)

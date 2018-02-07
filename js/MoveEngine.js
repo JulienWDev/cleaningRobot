@@ -1,4 +1,4 @@
-var MoveEngine = (function () {
+var MoveEngine = function () {
     var self = {};
     var internalGrid = {};
     var gridIsComplete = false;
@@ -7,13 +7,15 @@ var MoveEngine = (function () {
 
     }
 
-    self.getNextMove = function(){
-
+    self.getNextMove = function(neighboringCells){
+        return 'up';
     };
 
     self.isMapComplete = function (){
+        var isMapComplete = false;
 
+        return isMapComplete;
     };
 
     return self;
-})();
+};

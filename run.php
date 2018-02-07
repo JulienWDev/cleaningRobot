@@ -13,14 +13,29 @@ if (true === isset($_GET['filename']) && '' != $_GET['filename']){
     $fileName = $_GET['filename'];
     $filePath = $gridsFolder . DIRECTORY_SEPARATOR . $fileName;
     if (true === file_exists($filePath)){
+
         $grid = new Grid($filePath);
         $htmlCoderViewGrid = $grid->getHtmlGrid('coderView');
         $htmlRobotViewGrid = $grid->getHtmlGrid('robotView');
         $gridArray = $grid->getGrid();
+        $cssMapping = $grid->getCssMapping();
+
+        $gridJson = '';
         if (true === is_array($gridArray)){
-            $gridJson = '';
             try{
                 $gridJson = json_encode($gridArray);
+            } catch(\Exception $e){
+                error_log('Exception: '.print_r($e->getMessage(), true), 0);
+            }
+        }
+
+        $cssMappingJson = '';
+        if (true === is_array($cssMapping)){
+            try{
+                error_log('$cssMapping = '.print_r($cssMapping,true),0);
+                $cssMappingJson = json_encode($cssMapping, JSON_FORCE_OBJECT);
+                $cssMappingJson = str_replace('"', '\'', $cssMappingJson);
+                error_log('$cssMappingJson = '.$cssMappingJson,0);
             } catch(\Exception $e){
                 error_log('Exception: '.print_r($e->getMessage(), true), 0);
             }
@@ -53,7 +68,7 @@ if (0 !== count($errors)):{
 else:
 ?>
 
-<table id="board" data-grid_json="<?php echo $gridJson; ?>">
+<table id="board" data-grid_json="<?php echo $gridJson; ?>" data-css_mapping_json="<?php echo $cssMappingJson; ?>">
     <tr>
         <td>
             <?php
@@ -84,6 +99,7 @@ endif;
     src="http://code.jquery.com/jquery-3.3.1.min.js"
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
+<script type="text/javascript" src="js/RobotView.js"></script>
 <script type="text/javascript" src="js/MoveEngine.js"></script>
 <script type="text/javascript" src="js/Sensors.js"></script>
 <script type="text/javascript" src="js/Robot.js"></script>

@@ -1,20 +1,21 @@
 var Robot = (function () {
     var self = {};
     var sensors;
+    var moveEngine;
     var $currentCell;
 
-
     function exploreGrid(){
+        var neighboringCells,
+            direction;
         // while (false === MoveEngine.isMapComplete()){
-            var neighboringCells = sensors.getNeighboringCells($currentCell);
-            console.log('neighboringCells =', neighboringCells);
-            MoveEngine.getNextMove(neighboringCells);
-            // move();
+            neighboringCells = sensors.getNeighboringCells($currentCell);
+            direction = moveEngine.getNextMove(neighboringCells);
+            move(direction);
         // }
     }
 
     function move(direction){
-
+        console.log('in move, direction=', direction);
     }
 
     function showOnMap($startCell){
@@ -29,6 +30,14 @@ var Robot = (function () {
         return true;
     }
 
+    function initMoveEngine() {
+        moveEngine = new MoveEngine();
+        if (false === moveEngine){
+            return false
+        }
+        return true;
+    }
+
     self.getSensors = function(){
       return sensors;
     };
@@ -36,6 +45,7 @@ var Robot = (function () {
     self.init = function (boardId, $startCell){
         console.log('Démarrage du robot, $startCell=', $startCell);
         initSensor(boardId);
+        initMoveEngine();
         showOnMap($startCell);
         $currentCell = $startCell;
 
