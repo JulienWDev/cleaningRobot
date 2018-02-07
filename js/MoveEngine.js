@@ -3,6 +3,10 @@ var MoveEngine = (function () {
     var internalGrid = {};
     var gridIsComplete = false;
 
+    function updateInternalGrid(){
+
+    }
+
     self.getNextMove = function(){
 
     };

@@ -5,9 +5,9 @@ var Robot = (function () {
 
 
     function exploreGrid(){
-        while (false === isMapComplete()){
+        while (false === MoveEngine.isMapComplete()){
             var neighboringCells;
-            getNextMove();
+            MoveEngine.getNextMove();
         }
     }
 
@@ -15,9 +15,7 @@ var Robot = (function () {
 
     }
 
-    function updateInternalGrid(){
 
-    }
 
     self.lookAround = function(){
         Sensors.getNeighboringCells($currentCell);
