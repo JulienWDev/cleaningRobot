@@ -4,7 +4,8 @@ var boardId = 'board';
 var Run =(function () {
     var self = {},
         $message = $('#message'),
-        robot;
+        robot,
+        rcp;
 
     var doBindings = function(grid_id){
         var $grid = $(grid_id);
@@ -14,13 +15,16 @@ var Run =(function () {
                 $message.text('Démarrage du Test...');
                 $grid.removeClass('interactive');
                 robot = new Robot(boardId, $startCell);
-                var rcp = new RobotCommandPanel('robot_command_panel', robot);
+                robot.attachCommandPanel(rcp);
+                rcp.attachRobot(robot);
             }
         });
     };
 
     self.init = function (grid_id){
         console.log('Démarrage du test');
+
+        rcp = new RobotCommandPanel('robot_command_panel');
 
         doBindings(grid_id);
 

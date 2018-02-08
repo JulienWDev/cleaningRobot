@@ -123,12 +123,13 @@ endif;
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
 
+<script type="text/javascript" src="js/RobotCommandPanel.js"></script>
 <script type="text/javascript" src="js/RobotView.js"></script>
 <script type="text/javascript" src="js/MoveEngine.js"></script>
 <script type="text/javascript" src="js/Sensors.js"></script>
 <script type="text/javascript" src="js/Robot.js"></script>
 <script type="text/javascript" src="js/Run.js"></script>
-<script type="text/javascript" src="js/RobotCommandPanel.js"></script>
+
 
 </body>
 </html>

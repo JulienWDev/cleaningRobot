@@ -2,7 +2,8 @@ var Sensors = function (boardId) {
 
     var self = {},
         grid = {},
-        robotView;
+        robotView,
+        $board;
 
     self.min_X = 0;
     self.min_Y = 0;
@@ -69,9 +70,15 @@ var Sensors = function (boardId) {
         return grid;
     };
 
+    self.getBoard = function(){
+        return $board;
+    };
+
     var init = function(boardId){
-        var $board = $('#' + boardId),
-            $coderViewBoundaries = $('#coderView_boundaries');
+
+        $board = $('#' + boardId);
+
+        var $coderViewBoundaries = $('#coderView_boundaries');
 
         console.log('Démarrage des capteurs');
 

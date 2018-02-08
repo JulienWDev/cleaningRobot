@@ -1,46 +1,87 @@
 var RobotCommandPanel = function (rcpId, robotToControl) {
     var self = {},
-        robot;
+        $rcp, //robot command panel
+        $rcpButtons = [],
+        robot,
+        validDirections = ['up', 'right', 'bottom', 'left', 'explore'];
 
-
-    var onCommandClick = function ($btn) {
-        console.log('click detected, $btn=', $btn);
-    };
-
-    var doBindings = function(rcpId){
-        console.log('in doBindings, rcpId=', rcpId);
-        var $rcp = $('#' + rcpId),
-            validDirections = ['up', 'right', 'bottom', 'left', 'explore'],
-            direction,
+    var detectPanelButtons = function (rcpId) {
+        var direction,
             i,
             $btn;
+
+        $rcp = $('#' + rcpId);
 
         if ('undefined' !== typeof $rcp && 1 === $rcp.length){
             for (i in validDirections){
                 if (validDirections.hasOwnProperty(i)){
                     direction = validDirections[i];
                     $btn = $rcp.find('#btn_' + direction);
-                    $btn.on('click', function () {
-                        onCommandClick($(this));
-                    });
-                    $btn.removeAttr('disabled')
+                    if('undefined' !== typeof $rcp && 1 === $rcp.length){
+                        $rcpButtons.push($btn);
+                    } else {
+                        console.error('Error in detectPanelButtons(): No button found for direction "' + direction + '"');
+                        return false;
+                    }
                 }
             }
-
-            $rcp.removeAttr('title');
         } else {
-            console.error('Error in doBindings(): No command panel found');
+            console.error('Error in detectPanelButtons(): No command panel found');
             return false;
         }
 
         return true;
     };
 
-    var init = function (rcpId, robotToControl){
-        if (true === doBindings(rcpId)){
-            console.log('Commandes du robot activées');
+    self.getButtons = function () {
+      return $rcpButtons;
+    };
+
+    self.deactivatePanelButtons = function($buttons){
+        $rcp.attr('title', 'Veuillez placer le robot sur la grille');
+        $.each($buttons, function (){
+            var $btn = $(this);
+            $btn.attr('disabled', true);
+        });
+    };
+
+    self.activatePanelButtons = function($buttons){
+        $rcp.attr('title', '');
+        $.each($buttons, function (){
+            var $btn = $(this);
+            $btn.attr('disabled', false);
+        });
+    };
+
+    var onCommandClick = function ($btn) {
+        var direction = $btn.data('direction');
+
+        if ('undefined' !== typeof direction && -1 !== validDirections.indexOf(direction)){
+            robot.move(direction);
+        } else {
+            console.error('Error in onCommandClick(): Invalid direction given');
         }
+    };
+
+    self.doBindings = function(){
+        $.each($rcpButtons, function (){
+            var $btn = $(this);
+            $btn.on('click', function () {
+                onCommandClick($(this));
+            });
+        });
+
+        return true;
+    };
+
+    self.attachRobot = function(robotToControl){
         robot = robotToControl;
+    };
+
+    var init = function (rcpId){
+        if (true === detectPanelButtons(rcpId)){
+            self.deactivatePanelButtons($rcpButtons);
+        }
     };
 
 
