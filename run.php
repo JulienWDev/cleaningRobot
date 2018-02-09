@@ -90,8 +90,9 @@ $htmlRobotCommandPanel = '
     <table>
     <tbody>
         <tr><td>Engine: '.$engineSelect.'</td></tr>
-        <tr><td><input type="checkbox" id="explore_step_by_step"><label for="explore_step_by_step">Pas à pas</label></td></tr>
+        <tr><td><input type="checkbox" id="explore_step_by_step"><label for="explore_step_by_step">Step by step</label></td></tr>
         <tr><td><button id="btn_explore" data-direction="explore" disabled>EXPLORE</button></td></tr>
+        <tr><td><button id="explore_next_step" class="hidden" disabled>NEXT STEP</button></td></tr>
     </tbody>
     </table>
 </div>';

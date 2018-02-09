@@ -66,3 +66,7 @@ table.interactive td:hover{
 #message{
     margin-top: 1em;
 }
+
+.hidden {
+    display: none;
+}

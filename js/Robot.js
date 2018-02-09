@@ -16,6 +16,10 @@ var Robot = function (boardId, $startCell) {
         window.engine = engine;
         initMoveEngine();
 
+        if (true === stepByStep){
+
+        }
+
         while (false === moveEngine.isMapComplete() && moves < failsafe){
             neighboringCells = sensors.getNeighboringCells($currentCell);
             direction = moveEngine.getNextMove(neighboringCells);
