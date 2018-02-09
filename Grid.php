@@ -15,7 +15,6 @@ class Grid{
 
         private function loadGrid($filePath)
         {
-//            echo "Raw Grid:<br /><br />";
             $handle = @fopen($filePath, "r");
             if ($handle) {
                 while (($buffer = fgets($handle, 4096)) !== false) {
@@ -28,7 +27,6 @@ class Grid{
                             $gridLine[] = (int)$char;
                         }
                     }
-//                    echo "$buffer<br />";
 
                     $this->grid[] = $gridLine;
                 }
@@ -36,13 +34,17 @@ class Grid{
                     echo "Erreur: fgets() a échoué\n";
                 }
                 fclose($handle);
-//                echo "<br />";
             }
         }
 
         public function getGrid()
         {
             return $this->grid;
+        }
+
+        public function getCssMapping()
+        {
+            return $this->cssMapping;
         }
 
         public function getHtmlGrid($mode)
@@ -60,24 +62,32 @@ class Grid{
                     $tableClass = 'interactive';
                 }
 
-                $html .= '<table id="'.$mode.'" class="'.$tableClass.' '.$mode.'"><tbody>';
+                $html .= '<table id="'.$mode.'" class="'.$tableClass.' '.$mode.' grid"><tbody>';
 
-                foreach($this->grid as $gridLine){
+                $max_x = 0;
+                $max_y = 0;
+                foreach($this->grid as $y => $gridLine){
                     if (true === is_array($gridLine)){
                         $html .= '<tr>';
-                        foreach($gridLine as $gridCell){
+                        foreach($gridLine as $x => $gridCell){
                             if (true === isset($this->cssMapping[$gridCell])){
                                 $cssClass = $this->cssMapping[$gridCell];
                                 if ('robotView' === $mode){
                                     $cssClass = 'unknown';
                                 }
-                                $html .= '<td class="'.$cssClass.'"></td>';
+                                $html .= '<td class="'.$cssClass.'" data-x="'.$x.'" data-y="'.$y.'"></td>';
+                            }
+                            if ($x > $max_x){
+                                $max_x = $x;
                             }
                         }
                         $html .= '</tr>';
                     }
+                    if ($y > $max_y){
+                        $max_y = $y;
+                    }
                 }
-                $html .= '</tbody></table>';
+                $html .= '</tbody></table><span id="'.$mode.'_boundaries" data-max_x="'.$max_x.'" data-max_y="'.$max_y.'"></span>';
             }
 
             return $html;
