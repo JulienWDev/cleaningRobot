@@ -101,7 +101,7 @@ var Robot = function (boardId, $startCell) {
     }
 
     function initMoveEngine() {
-        moveEngine = new MoveEngine();
+        moveEngine = new LaurentEngine();
         if (false === moveEngine){
             return false
         }
