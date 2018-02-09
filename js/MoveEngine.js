@@ -8,12 +8,6 @@ var MoveEngine = function () {
     }
 
     self.getNextMove = function(neighboringCells){
-
-        console.log(neighboringCells);
-        // First init table
-        if(internalGrid.count() == 0){
-
-        }
         return 'up';
     };
 
