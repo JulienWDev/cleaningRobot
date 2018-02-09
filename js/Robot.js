@@ -9,9 +9,13 @@ var Robot = function (boardId, $startCell) {
         robotCssClass = 'robot',
         validDirections = ['up', 'right', 'bottom', 'left'];
 
-    self.exploreGrid = function(){
+    self.exploreGrid = function(engine, stepByStep){
             var direction,
                 moves = 0;
+
+        window.engine = engine;
+        initMoveEngine();
+
         while (false === moveEngine.isMapComplete() && moves < failsafe){
             neighboringCells = sensors.getNeighboringCells($currentCell);
             direction = moveEngine.getNextMove(neighboringCells);
@@ -101,7 +105,7 @@ var Robot = function (boardId, $startCell) {
     }
 
     function initMoveEngine() {
-        moveEngine = new LaurentEngine();
+        moveEngine = new window[engine]();
         if (false === moveEngine){
             return false
         }
@@ -115,7 +119,6 @@ var Robot = function (boardId, $startCell) {
     init = function (boardId, $startCell){
         console.log('Démarrage du robot, $startCell=', $startCell);
         initSensor(boardId);
-        initMoveEngine();
         showOnMap($startCell);
         $currentCell = $startCell;
         neighboringCells = sensors.getNeighboringCells($currentCell);
