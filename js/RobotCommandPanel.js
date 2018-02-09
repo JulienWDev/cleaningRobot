@@ -57,7 +57,11 @@ var RobotCommandPanel = function (rcpId, robotToControl) {
         var direction = $btn.data('direction');
 
         if ('undefined' !== typeof direction && -1 !== validDirections.indexOf(direction)){
-            robot.move(direction);
+            if ('explore' === direction){
+                robot.exploreGrid();
+            } else {
+                robot.move(direction);
+            }
         } else {
             console.error('Error in onCommandClick(): Invalid direction given');
         }

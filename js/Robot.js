@@ -2,6 +2,7 @@ var Robot = function (boardId, $startCell) {
     var self = {},
         sensors,
         moveEngine,
+        failsafe = 500,
         rcp, //robot command panel
         $currentCell,
         neighboringCells,
@@ -9,12 +10,20 @@ var Robot = function (boardId, $startCell) {
         validDirections = ['up', 'right', 'bottom', 'left'];
 
     self.exploreGrid = function(){
-            var direction;
-        // while (false === MoveEngine.isMapComplete()){
+            var direction,
+                moves = 0;
+        while (false === moveEngine.isMapComplete() && moves < failsafe){
             neighboringCells = sensors.getNeighboringCells($currentCell);
             direction = moveEngine.getNextMove(neighboringCells);
             self.move(direction);
-        // }
+            moves++;
+        }
+
+        if (true === moveEngine.isMapComplete()){
+           console.log('Carte complète!');
+        } else {
+            console.error('Carte incomplète!');
+        }
     };
 
     var moveIsValid = function (direction) {
