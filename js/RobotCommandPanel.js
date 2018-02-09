@@ -38,27 +38,29 @@ var RobotCommandPanel = function (rcpId, robotToControl) {
     };
 
     self.deactivatePanelButtons = function($buttons){
-        $rcp.attr('title', 'Veuillez placer le robot sur la grille');
+        $rcp.prop('title', 'Veuillez placer le robot sur la grille');
         $.each($buttons, function (){
             var $btn = $(this);
-            $btn.attr('disabled', true);
+            $btn.prop('disabled', true);
         });
     };
 
     self.activatePanelButtons = function($buttons){
-        $rcp.attr('title', '');
+        $rcp.prop('title', '');
         $.each($buttons, function (){
             var $btn = $(this);
-            $btn.attr('disabled', false);
+            $btn.prop('disabled', false);
         });
     };
 
     var onCommandClick = function ($btn) {
-        var direction = $btn.data('direction');
+        var direction = $btn.data('direction'),
+            engine = $('#select_engine').val(),
+            stepByStep = $('#explore_step_by_step').prop('checked');
 
         if ('undefined' !== typeof direction && -1 !== validDirections.indexOf(direction)){
             if ('explore' === direction){
-                robot.exploreGrid();
+                robot.exploreGrid(engine, stepByStep);
             } else {
                 robot.move(direction);
             }

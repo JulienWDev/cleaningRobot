@@ -45,21 +45,58 @@ if (true === isset($_GET['filename']) && '' != $_GET['filename']){
     $errors[] = 'Veuillez indiquer un fichier de grille.';
 }
 
+$enginesFolder = 'js/move_engines';
+$files = scandir($enginesFolder);
+$enginesNames = array();
+error_log('$files='.print_r($files, true), 0);
+$ext= '.js';
+
+foreach ($files as $index => $fileName){
+    if (false !== strpos($fileName, $ext)){
+        $enginesNames[] = str_replace($ext, '', $fileName);
+    }
+}
+unset($index, $fileName);
+error_log('$enginesNames='.print_r($enginesNames, true), 0);
+
+
+$engineSelect = '<select id="select_engine">';
+
+foreach($enginesNames as $index => $engineName){
+    $engineSelect .= '<option value="'.$engineName.'">'.$engineName.'</option>';
+}
+unset($index, $engineName);
+
+$engineSelect .= '</select>';
+
 $htmlRobotCommandPanel = '
-<table id="robot_command_panel" title="Veuillez placer le robot sur la grille">
-    <tbody>
-    <tr><th colspan="3">Command Panel</th></tr>
-        <tr>
-            <td></td><td><button id="btn_up" data-direction="up" disabled>UP</button></td><td></td>
-        </tr>
-        <tr>
-            <td><button id="btn_left" data-direction="left" disabled>LEFT</button></td><td><button id="btn_explore" data-direction="explore" disabled>EXPLORE</button></td><td><button id="btn_right" data-direction="right" disabled>RIGHT</button></td>
+<div id="robot_command_panel" title="Veuillez placer le robot sur la grille">
+    <table >
+        <tbody>
+        <tr><th colspan="3">Command Panel</th></tr>
+            <tr>
+                <td></td><td><button id="btn_up" data-direction="up" disabled>UP</button></td><td></td>
             </tr>
-        <tr>
-            <td></td><td><button id="btn_bottom" data-direction="bottom" disabled>BOTTOM</button></td><td></td>
-        </tr>
-    </tbody>    
-</table>';
+            <tr>
+                <td><button id="btn_left" data-direction="left" disabled>LEFT</button></td><td></td><td><button id="btn_right" data-direction="right" disabled>RIGHT</button></td>
+                </tr>
+            <tr>
+                <td></td><td><button id="btn_bottom" data-direction="bottom" disabled>BOTTOM</button></td><td></td>
+            </tr>
+    
+        </tbody>    
+    </table>
+    <br />
+    <table>
+    <tbody>
+        <tr><td>Engine: '.$engineSelect.'</td></tr>
+        <tr><td><input type="checkbox" id="explore_step_by_step"><label for="explore_step_by_step">Pas à pas</label></td></tr>
+        <tr><td><button id="btn_explore" data-direction="explore" disabled>EXPLORE</button></td></tr>
+    </tbody>
+    </table>
+</div>';
+
+
 
 ?>
 
@@ -77,6 +114,7 @@ if (0 !== count($errors)):{
     foreach($errors as $error){
         echo '<p class="error">'.$error.'</p>';
     }
+    unset($error);
 }
 
 else:
@@ -125,7 +163,18 @@ endif;
 
 <script type="text/javascript" src="js/RobotCommandPanel.js"></script>
 <script type="text/javascript" src="js/RobotView.js"></script>
-<script type="text/javascript" src="js/MoveEngine.js"></script>
+
+<?php
+
+if (0 !== count($enginesNames)){
+    foreach($enginesNames as $index => $engineName){
+        echo '<script type="text/javascript" src="'.$enginesFolder.DIRECTORY_SEPARATOR.'/'.$engineName.'.js"></script>';
+    }
+    unset($index, $engineName);
+}
+
+?>
+
 <script type="text/javascript" src="js/LaurentEngine.js"></script>
 <script type="text/javascript" src="js/Sensors.js"></script>
 <script type="text/javascript" src="js/Robot.js"></script>
