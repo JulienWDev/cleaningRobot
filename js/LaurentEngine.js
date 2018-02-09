@@ -1,13 +1,23 @@
 var LaurentEngine = function () {
     var self = {};
-    var internalGrid = {};
+    var internalGrid = {
+        discoveredGrid: [],
+        ponderationGrid: []
+    };
     var gridIsComplete = false;
+    var totalMouvements = 0;
 
     function updateInternalGrid(){
 
     }
 
     self.getNextMove = function(neighboringCells){
+
+        console.log(neighboringCells);
+        // First init Grid table
+        if(totalMouvements == 0){
+
+        }
         return 'up';
     };
 
