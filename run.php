@@ -175,7 +175,7 @@ if (0 !== count($enginesNames)){
 
 ?>
 
-<script type="text/javascript" src="js/LaurentEngine.js"></script>
+<script type="text/javascript" src="js/move_engines/LaurentEngine.js"></script>
 <script type="text/javascript" src="js/Sensors.js"></script>
 <script type="text/javascript" src="js/Robot.js"></script>
 <script type="text/javascript" src="js/Run.js"></script>
