@@ -126,6 +126,7 @@ endif;
 <script type="text/javascript" src="js/RobotCommandPanel.js"></script>
 <script type="text/javascript" src="js/RobotView.js"></script>
 <script type="text/javascript" src="js/MoveEngine.js"></script>
+<script type="text/javascript" src="js/LaurentEngine.js"></script>
 <script type="text/javascript" src="js/Sensors.js"></script>
 <script type="text/javascript" src="js/Robot.js"></script>
 <script type="text/javascript" src="js/Run.js"></script>
