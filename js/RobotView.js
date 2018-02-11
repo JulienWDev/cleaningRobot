@@ -6,6 +6,10 @@ var RobotView = function ($board) {
         $robotViewPercentage,
         unknown = 'unknown';
 
+    self.getRobotView = function () {
+      return $robotView;
+    };
+
     self.updateRobotView = function (viewUpdates){
         var $robotView = $board.find('#robotView'),
             update,

@@ -3,7 +3,7 @@ var Robot = function (boardId, $startCell) {
         sensors,
         moveEngine,
         movesCount = 0,
-        failsafe = 10,
+        failsafe = 10, //low default, will be updated by the sensors
         exploreMode,
         rcp, //robot command panel
         $currentCell,
@@ -115,24 +115,26 @@ var Robot = function (boardId, $startCell) {
     };
 
     function initSensor(boardId) {
-        sensors = new Sensors(boardId);
-        if (false === sensors){
-            return false
+        try{
+            sensors = new Sensors(boardId);
+            return true;
+        } catch(e){
+            console.error('Error in initSensor():', e);
+            return false;
         }
-
-        return true;
     }
 
     function initMoveEngine() {
         try{
             moveEngine = new window[engine]();
+
             if ('undefined' === typeof moveEngine.getNextMove){
                 throw new Error('Engine is missing mandatory function "getNextMove"');
             }
             if ('undefined' === typeof moveEngine.isMapComplete){
                 throw new Error('Engine is missing mandatory function "isMapComplete"');
             }
-            return true
+            return true;
         } catch(e){
             console.error('Error in initMoveEngine():', e);
             return false;
@@ -146,6 +148,7 @@ var Robot = function (boardId, $startCell) {
     init = function (boardId, $startCell){
         console.log('Démarrage du robot, $startCell=', $startCell);
         initSensor(boardId);
+        failsafe = sensors.getFailsafe();
         showOnMap($startCell);
         $currentCell = $startCell;
         neighboringCells = sensors.getNeighboringCells($currentCell);

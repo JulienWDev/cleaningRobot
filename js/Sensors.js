@@ -3,6 +3,7 @@ var Sensors = function (boardId) {
     var self = {},
         grid = {},
         robotView,
+        failsafe,
         $board;
 
     self.min_X = 0;
@@ -74,6 +75,10 @@ var Sensors = function (boardId) {
         return $board;
     };
 
+    self.getFailsafe = function (){
+        return failsafe;
+    };
+
     var init = function(boardId){
 
         $board = $('#' + boardId);
@@ -92,6 +97,8 @@ var Sensors = function (boardId) {
         self.max_Y = $coderViewBoundaries.data('max_y');
 
         robotView = new RobotView($board);
+
+        failsafe = (robotView.getRobotView().find('td').length) * 4;
 
         console.log('Capteurs fonctionnels');
         return this;
