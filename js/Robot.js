@@ -2,36 +2,51 @@ var Robot = function (boardId, $startCell) {
     var self = {},
         sensors,
         moveEngine,
-        failsafe = 500,
+        movesCount = 0,
+        failsafe = 10,
+        exploreMode,
         rcp, //robot command panel
         $currentCell,
         neighboringCells,
         robotCssClass = 'robot',
         validDirections = ['up', 'right', 'bottom', 'left'];
 
-    self.exploreGrid = function(engine, stepByStep){
-            var direction,
-                moves = 0;
+    self.exploreGrid = function(engine, mode){
+        console.log('Mode d\'exploration : ', mode);
 
         window.engine = engine;
-        initMoveEngine();
-
-        if (true === stepByStep){
-
+        if (false === initMoveEngine()){
+            return false;
         }
+        exploreMode = mode;
 
-        while (false === moveEngine.isMapComplete() && moves < failsafe){
-            neighboringCells = sensors.getNeighboringCells($currentCell);
-            direction = moveEngine.getNextMove(neighboringCells);
-            self.move(direction);
-            moves++;
-        }
+        execute_moves_loop();
+    };
+
+    var execute_moves_loop = function () {
+        var direction;
+        neighboringCells = sensors.getNeighboringCells($currentCell);
+        direction = moveEngine.getNextMove(neighboringCells);
+        self.move(direction);
+        movesCount++;
 
         if (true === moveEngine.isMapComplete()){
-           console.log('Carte complète!');
+            console.log('Map is complete!');
         } else {
-            console.error('Carte incomplète!');
+            if (movesCount < failsafe){
+                if ('auto_with_interval' === exploreMode){
+                    window.setTimeout(function(){
+                        execute_moves_loop();
+                    }, 1000);
+                } else {
+                    execute_moves_loop();
+                }
+            } else{
+                console.error('map is not complete! (failsafe of ' + failsafe + ' moves reached)');
+            }
         }
+
+        return true;
     };
 
     var moveIsValid = function (direction) {
@@ -109,11 +124,19 @@ var Robot = function (boardId, $startCell) {
     }
 
     function initMoveEngine() {
-        moveEngine = new window[engine]();
-        if (false === moveEngine){
-            return false
+        try{
+            moveEngine = new window[engine]();
+            if ('undefined' === typeof moveEngine.getNextMove){
+                throw new Error('Engine is missing mandatory function "getNextMove"');
+            }
+            if ('undefined' === typeof moveEngine.isMapComplete){
+                throw new Error('Engine is missing mandatory function "isMapComplete"');
+            }
+            return true
+        } catch(e){
+            console.error('Error in initMoveEngine():', e);
+            return false;
         }
-        return true;
     }
 
     self.getSensors = function(){

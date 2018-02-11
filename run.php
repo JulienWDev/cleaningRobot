@@ -90,7 +90,15 @@ $htmlRobotCommandPanel = '
     <table>
     <tbody>
         <tr><td>Engine: '.$engineSelect.'</td></tr>
-        <tr><td><input type="checkbox" id="explore_step_by_step"><label for="explore_step_by_step">Step by step</label></td></tr>
+<!--        <tr><td>
+        <input type="radio" id="explore_manual_steps" value="manual" name="explore_mode"><label for="explore_manual_steps">Manual steps</label>
+        </td></tr> -->
+        <tr><td>
+        <input type="radio" id="explore_auto_with_interval" value="auto_with_interval" name="explore_mode"><label for="explore_auto_with_interval">Automatic with interval</label>
+            </td></tr>
+                    <tr><td>
+        <input type="radio" id="explore_full_auto" value="full_auto" name="explore_mode" checked><label for="explore_full_auto">Full Automatic</label>
+            </td></tr>
         <tr><td><button id="btn_explore" data-direction="explore" disabled>EXPLORE</button></td></tr>
         <tr><td><button id="explore_next_step" class="hidden" disabled>NEXT STEP</button></td></tr>
     </tbody>

@@ -56,11 +56,11 @@ var RobotCommandPanel = function (rcpId, robotToControl) {
     var onCommandClick = function ($btn) {
         var direction = $btn.data('direction'),
             engine = $('#select_engine').val(),
-            stepByStep = $('#explore_step_by_step').prop('checked');
+            mode = $('input[name="explore_mode"]:checked').val();
 
         if ('undefined' !== typeof direction && -1 !== validDirections.indexOf(direction)){
             if ('explore' === direction){
-                robot.exploreGrid(engine, stepByStep);
+                robot.exploreGrid(engine, mode);
             } else {
                 robot.move(direction);
             }
@@ -72,7 +72,7 @@ var RobotCommandPanel = function (rcpId, robotToControl) {
     self.doBindings = function(){
         $.each($rcpButtons, function (){
             var $btn = $(this);
-            $btn.on('click', function () {
+            $btn.off('click').on('click', function () {
                 onCommandClick($(this));
             });
         });

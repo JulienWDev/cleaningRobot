@@ -17,7 +17,5 @@ var Broken = function () {
         return isMapComplete;
     };
 
-    console.log('in Broken.js');
-
     return self;
 };
