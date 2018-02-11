@@ -144,6 +144,7 @@ else:
             <?php
             if ('' !== $htmlRobotViewGrid) {
                 echo $htmlRobotViewGrid;
+                echo'<div id="robotViewPercentage"></div>';
             } else {
                 echo 'Impossible de charger la grille HTML.';
             }
