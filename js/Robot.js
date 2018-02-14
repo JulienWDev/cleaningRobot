@@ -32,12 +32,13 @@ var Robot = function (boardId, $startCell) {
 
         if (true === moveEngine.isMapComplete()){
             console.log('Map is complete!');
+            console.log(movesCount + ' moves.');
         } else {
             if (movesCount < failsafe){
                 if ('auto_with_interval' === exploreMode){
                     window.setTimeout(function(){
                         execute_moves_loop();
-                    }, 1000);
+                    }, 250);
                 } else {
                     execute_moves_loop();
                 }

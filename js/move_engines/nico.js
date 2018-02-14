@@ -62,53 +62,23 @@ var nico = function () {
         // Update Up
         if (neighboringCells.up === 1){
             internalGrid[position[0]-1][position[1]] = defaultWallValue;
-            //getOrSetUpValue(defaultWallValue);
         }
         // Update left
         if (neighboringCells.left === 1){
             internalGrid[position[0]][position[1]-1] = defaultWallValue;
-            //getOrSetLeftValue(defaultWallValue);
         }
         // Update down
         if (neighboringCells.bottom === 1){
             internalGrid[position[0]+1][position[1]] = defaultWallValue;
-            //getOrSetDownValue(defaultWallValue);
         }
         // Update right
         if (neighboringCells.right === 1){
             internalGrid[position[0]][position[1]+1] = defaultWallValue;
-            //getOrSetRightValue(defaultWallValue);
         }
     }
     
-    /*function getOrSetValue(col, line, addValue) {
-        //if (typeof addValue !== 'undefined') {
-        if (addValue) {
-            if (internalGrid[col][line] !== defaultWallValue){
-                internalGrid[col][line] += addValue;
-            }
-        return internalGrid[col][line];
-    }
-    
-    function getOrSetUpValue(addValue) {
-        return getOrSetValue(position[0]-1, position[1], addValue);
-    }
-    
-    function getOrSetLeftValue(addValue) {
-        return getOrSetValue(position[0], position[1]-1, addValue);
-    }
-    
-    function getOrSetDownValue(addValue) {
-        return getOrSetValue(position[0]+1, position[1], addValue);
-    }
-    
-    function getOrSetRightValue(addValue) {
-        return getOrSetValue(position[0], position[1]+1, addValue);
-    }*/
 
     self.getNextMove = function(neighboringCells){
-        //console.log("next run ", position);
-        //console.log(neighboringCells.up,neighboringCells.left,neighboringCells.bottom,neighboringCells.right);
         updateInternalGrid(neighboringCells);
         
         count+=1;
@@ -124,7 +94,6 @@ var nico = function () {
         var bottom = internalGrid[position[0]+1][position[1]];
         var right = internalGrid[position[0]][position[1]+1];
         
-        //console.log("up",up,"left",left,"bottom",bottom,"right",right);
         if (up <= left && up <= bottom && up <= right ){
             position[0] -=  1;
             return "up";
@@ -142,7 +111,6 @@ var nico = function () {
     };
     
     function refreshHiddenWall(){
-        console.log("Refresh wall");
         for(var i = 0; i < internalGrid.length; i++) {
             for(var j = 0; j < internalGrid[i].length; j++) {
                 if (internalGrid[i][j] === 0) {
@@ -150,7 +118,6 @@ var nico = function () {
                         try{// coin haut-gauche
                             if (defaultWallValue === internalGrid[i+1][j] &&
                                 defaultWallValue === internalGrid[i][j+1]){
-                                console.log(internalGrid);
                                 internalGrid[i][j] = defaultWallValue;
                             }
                         } catch (error) { }
@@ -158,14 +125,12 @@ var nico = function () {
                             if (defaultWallValue === internalGrid[i+1][j] &&
                                 defaultWallValue === internalGrid[i][j+1] &&
                                 defaultWallValue === internalGrid[i][j-1]){
-                                console.log(internalGrid);
                                 internalGrid[i][j] = defaultWallValue;
                             }
                         } catch (error) { }
                         try{// coin haut-droit
                             if (defaultWallValue === internalGrid[i+1][j] &&
                                 defaultWallValue === internalGrid[i][j-1]){
-                                console.log(internalGrid);
                                 internalGrid[i][j] = defaultWallValue;
                             }
                         } catch (error) { }
@@ -175,7 +140,6 @@ var nico = function () {
                             if (defaultWallValue === internalGrid[i+1][j] &&
                                 defaultWallValue === internalGrid[i-1][j] &&
                                 defaultWallValue === internalGrid[i][j-1]){
-                                console.log(internalGrid);
                                 internalGrid[i][j] = defaultWallValue;
                             }
                         } catch (error) { }
@@ -185,14 +149,12 @@ var nico = function () {
                             if (defaultWallValue === internalGrid[i-1][j] &&
                                 defaultWallValue === internalGrid[i][j+1] &&
                                 defaultWallValue === internalGrid[i][j-1]){
-                                console.log(internalGrid);
                                 internalGrid[i][j] = defaultWallValue;
                             }
                         } catch (error) { }
                         try{// coin bas-droit
                             if (defaultWallValue === internalGrid[i-1][j] &&
                                 defaultWallValue === internalGrid[i][j-1]){
-                                console.log(internalGrid);
                                 internalGrid[i][j] = defaultWallValue;
                             }
                         } catch (error) { }
@@ -201,7 +163,6 @@ var nico = function () {
                         try{// coin bas-gauche
                             if (defaultWallValue === internalGrid[i-1][j] &&
                                 defaultWallValue === internalGrid[i][j+1]){
-                                console.log(internalGrid);
                                 internalGrid[i][j] = defaultWallValue;
                             }
                         } catch (error) { }
@@ -209,7 +170,6 @@ var nico = function () {
                             if (defaultWallValue === internalGrid[i-1][j] &&
                                 defaultWallValue === internalGrid[i+1][j] &&
                                 defaultWallValue === internalGrid[i][j+1]){
-                                console.log(internalGrid);
                                 internalGrid[i][j] = defaultWallValue;
                             }
                         } catch (error) { }
