@@ -4,7 +4,7 @@ var nico = function () {
     
     var internalGrid = [[0]];
     var position = [0, 0];
-    var defaultValue = 0;
+    var defaultValue = -1;
     var defaultWallValue = 5000;
     
     function addUp() {
@@ -111,72 +111,128 @@ var nico = function () {
     };
     
     function refreshHiddenWall(){
+        var launchRefresh = 0;
         for(var i = 0; i < internalGrid.length; i++) {
             for(var j = 0; j < internalGrid[i].length; j++) {
-                if (internalGrid[i][j] === 0) {
-                    if (i===0) {
-                        try{// coin haut-gauche
-                            if (defaultWallValue === internalGrid[i+1][j] &&
-                                defaultWallValue === internalGrid[i][j+1]){
-                                internalGrid[i][j] = defaultWallValue;
-                            }
-                        } catch (error) { }
-                        try{// sur ligne haut
-                            if (defaultWallValue === internalGrid[i+1][j] &&
-                                defaultWallValue === internalGrid[i][j+1] &&
-                                defaultWallValue === internalGrid[i][j-1]){
-                                internalGrid[i][j] = defaultWallValue;
-                            }
-                        } catch (error) { }
-                        try{// coin haut-droit
-                            if (defaultWallValue === internalGrid[i+1][j] &&
-                                defaultWallValue === internalGrid[i][j-1]){
-                                internalGrid[i][j] = defaultWallValue;
-                            }
-                        } catch (error) { }
-                    }
-                    if (j === internalGrid[0].length-1) {
-                        try{// sur colonne droite
-                            if (defaultWallValue === internalGrid[i+1][j] &&
-                                defaultWallValue === internalGrid[i-1][j] &&
-                                defaultWallValue === internalGrid[i][j-1]){
-                                internalGrid[i][j] = defaultWallValue;
-                            }
-                        } catch (error) { }
-                    }
-                    if (i === internalGrid.length-1) {
-                        try{// sur ligne basse
-                            if (defaultWallValue === internalGrid[i-1][j] &&
-                                defaultWallValue === internalGrid[i][j+1] &&
-                                defaultWallValue === internalGrid[i][j-1]){
-                                internalGrid[i][j] = defaultWallValue;
-                            }
-                        } catch (error) { }
-                        try{// coin bas-droit
-                            if (defaultWallValue === internalGrid[i-1][j] &&
-                                defaultWallValue === internalGrid[i][j-1]){
-                                internalGrid[i][j] = defaultWallValue;
-                            }
-                        } catch (error) { }
-                    }
-                    if (j === 0) {
-                        try{// coin bas-gauche
-                            if (defaultWallValue === internalGrid[i-1][j] &&
-                                defaultWallValue === internalGrid[i][j+1]){
-                                internalGrid[i][j] = defaultWallValue;
-                            }
-                        } catch (error) { }
-                        try{// sur colonne gauche
-                            if (defaultWallValue === internalGrid[i-1][j] &&
-                                defaultWallValue === internalGrid[i+1][j] &&
-                                defaultWallValue === internalGrid[i][j+1]){
-                                internalGrid[i][j] = defaultWallValue;
-                            }
-                        } catch (error) { }
+                if ((i === 0 && j === 0) || (i === 0 && j === internalGrid[0].length-1) ||
+                    (i === internalGrid.length-1 && j === 0) || (i === internalGrid.length-1 && j === internalGrid[0].length-1) )
+                    continue;
+                if  ((i === 0 && (( (internalGrid[i+1][j] === defaultValue || internalGrid[i+1][j] === defaultWallValue) &&
+                            internalGrid[i][j] === defaultValue) || internalGrid[i][j] === defaultWallValue )) ||
+                     (j === 0 && (( (internalGrid[i][j+1] === defaultValue || internalGrid[i][j+1] === defaultWallValue) &&
+                            internalGrid[i][j] === defaultValue) || internalGrid[i][j] === defaultWallValue )) ||
+                     (i === internalGrid.length-1 && (( (internalGrid[i-1][j] === defaultValue || internalGrid[i-1][j] === defaultWallValue) &&
+                            internalGrid[i][j] === defaultValue) || internalGrid[i][j] === defaultWallValue )) ||
+                     (j === internalGrid[0].length-1 && (( (internalGrid[i][j-1] === defaultValue || internalGrid[i][j-1] === defaultWallValue) &&
+                            internalGrid[i][j] === defaultValue) || internalGrid[i][j] === defaultWallValue )) )
+                     launchRefresh = 1;
+            }
+        }
+        if (launchRefresh === 1) {
+            for(var i = 0; i < internalGrid.length; i++) {
+                for(var j = 0; j < internalGrid[i].length; j++) {
+                    if (internalGrid[i][j] === defaultValue) {
+                        if (i===0) {
+                            try{// coin haut-gauche
+                                if (defaultWallValue === internalGrid[i+1][j] &&
+                                    defaultWallValue === internalGrid[i][j+1]){
+                                    internalGrid[i][j] = defaultWallValue;
+                                }
+                            } catch (error) { }
+                            try{// sur ligne haut
+                                if (defaultWallValue === internalGrid[i+1][j] &&
+                                    defaultWallValue === internalGrid[i][j+1] &&
+                                    defaultWallValue === internalGrid[i][j-1]){
+                                    internalGrid[i][j] = defaultWallValue;
+                                }
+                            } catch (error) { }
+                            try{// coin haut-droit
+                                if (defaultWallValue === internalGrid[i+1][j] &&
+                                    defaultWallValue === internalGrid[i][j-1]){
+                                    internalGrid[i][j] = defaultWallValue;
+                                }
+                            } catch (error) { }
+                        }
+                        if (j === internalGrid[0].length-1) {
+                            try{// sur colonne droite
+                                if (defaultWallValue === internalGrid[i+1][j] &&
+                                    defaultWallValue === internalGrid[i-1][j] &&
+                                    defaultWallValue === internalGrid[i][j-1]){
+                                    internalGrid[i][j] = defaultWallValue;
+                                }
+                            } catch (error) { }
+                        }
+                        if (i === internalGrid.length-1) {
+                            try{// sur ligne basse
+                                if (defaultWallValue === internalGrid[i-1][j] &&
+                                    defaultWallValue === internalGrid[i][j+1] &&
+                                    defaultWallValue === internalGrid[i][j-1]){
+                                    internalGrid[i][j] = defaultWallValue;
+                                }
+                            } catch (error) { }
+                            try{// coin bas-droit
+                                if (defaultWallValue === internalGrid[i-1][j] &&
+                                    defaultWallValue === internalGrid[i][j-1]){
+                                    internalGrid[i][j] = defaultWallValue;
+                                }
+                            } catch (error) { }
+                        }
+                        if (j === 0) {
+                            try{// coin bas-gauche
+                                if (defaultWallValue === internalGrid[i-1][j] &&
+                                    defaultWallValue === internalGrid[i][j+1]){
+                                    internalGrid[i][j] = defaultWallValue;
+                                }
+                            } catch (error) { }
+                            try{// sur colonne gauche
+                                if (defaultWallValue === internalGrid[i-1][j] &&
+                                    defaultWallValue === internalGrid[i+1][j] &&
+                                    defaultWallValue === internalGrid[i][j+1]){
+                                    internalGrid[i][j] = defaultWallValue;
+                                }
+                            } catch (error) { }
+                        }
+                        if (i === 0 && j === 0) {
+                            try{// coin haut-droit isolé
+                                if (defaultWallValue === internalGrid[i+1][j+1] &&
+                                    defaultWallValue === internalGrid[i][j+2] &&
+                                    defaultWallValue === internalGrid[i+2][j] ){
+                                    internalGrid[i][j] = defaultWallValue;
+                                }
+                            } catch (error) { }
+                        }
+                        if (i === 0 && j === internalGrid[0].length-1) {
+                            try{// coin haut-gauche isolé
+                                if (defaultWallValue === internalGrid[i+1][j-1] &&
+                                    defaultWallValue === internalGrid[i][j-2] &&
+                                    defaultWallValue === internalGrid[i+2][j]){
+                                    internalGrid[i][j] = defaultWallValue;
+                                }
+                            } catch (error) { }
+                        }
+                        if (i === internalGrid.length-1 && j === internalGrid[0].length-1) {
+                            try{// coin bas-gauche isolé
+                                if (defaultWallValue === internalGrid[i-1][j-1] &&
+                                    defaultWallValue === internalGrid[i][j-2] &&
+                                    defaultWallValue === internalGrid[i-2][j]){
+                                    internalGrid[i][j] = defaultWallValue;
+                                }
+                            } catch (error) { }
+                        }
+                        if (i === internalGrid.length-1 && j === 0) {
+                            try{// coin bas-droit isolé
+                                if (defaultWallValue === internalGrid[i-1][j+1] &&
+                                    defaultWallValue === internalGrid[i][j+2] &&
+                                    defaultWallValue === internalGrid[i-2][j]){
+                                    internalGrid[i][j] = defaultWallValue;
+                                }
+                            } catch (error) { }
+                        }
                     }
                 }
             }
-        }   
+        }
+        console.log(internalGrid);
     }
 
     self.isMapComplete = function (){
@@ -185,7 +241,7 @@ var nico = function () {
 
         for(var i = 0; i < internalGrid.length; i++) {
             for(var j = 0; j < internalGrid[i].length; j++) {
-                if (internalGrid[i][j] === 0) {
+                if (internalGrid[i][j] === defaultValue) {
                     countinvisited += 1;
                 }
             }
