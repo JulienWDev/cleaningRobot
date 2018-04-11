@@ -1,4 +1,4 @@
-var nico = function () {
+var nicov2 = function () {
     var self = {};
     var count =0;
     
@@ -6,6 +6,7 @@ var nico = function () {
     var position = [0, 0];
     var defaultValue = -1;
     var defaultWallValue = 5000;
+    var blockedWayValue = 4999;
     
     function addUp() {
         internalGrid.unshift( initTab(internalGrid[0].length) ) ;
@@ -82,9 +83,10 @@ var nico = function () {
         updateInternalGrid(neighboringCells);
         
         //count+=1;
-        //if (count === 10 ) {
+        //if (count === 21 ) {
             refreshHiddenWall();
         //    count =0;
+        //    exit();
         //}
         
         // Check Bestway
@@ -93,6 +95,12 @@ var nico = function () {
         var bottom = internalGrid[position[0]+1][position[1]];
         var right = internalGrid[position[0]][position[1]+1];
         
+        //Si il y a une chemin blocké (ie au moins 3/2 murs + chemin blocké) ..
+        if ( (up + left + bottom + right) >= (defaultWallValue + defaultWallValue + blockedWayValue) ) {
+            internalGrid[position[0]][position[1]] = blockedWayValue;
+        }
+        
+        //Recherche du chemin le moins utilisé
         if (up <= left && up <= bottom && up <= right ){
             position[0] -=  1;
             return "up";
@@ -131,7 +139,7 @@ var nico = function () {
         }
         // 60 % ... 
         if ( ((nbWall * 100) / nbOther >= 60 ) ){ // nb Wall >= 60% ...
-            launchRefresh = 1; 
+            launchRefresh = 1;
         }
         
         // Refresh hidden wall 
